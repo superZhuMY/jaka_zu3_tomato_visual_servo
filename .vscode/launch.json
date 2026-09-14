@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python", 
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "python": "/home/mzc/anaconda3/envs/yolov9/bin/python",
+            "program": "${file}",
+            "cwd": "${workspaceRoot}",
+            "console": "integratedTerminal",
+            "justMyCode": true, 
+            "args": ["examples\\benchmarks\\LightGBM\\workflow_config_lightgbm_Alpha158_l1.yaml"],
+            "env": {
+                "PYTHONPATH": "/home/mzc/jaka_robot/devel/lib/python3/dist-packages:${env:PYTHONPATH}",
+                "ROS_PACKAGE_PATH": "/home/mzc/jaka_robot/src:${env:ROS_PACKAGE_PATH}"
+            },
+            "envFile": "${workspaceRoot}/.env",
+            "redirectOutput": true
+        }
+    ]
+}

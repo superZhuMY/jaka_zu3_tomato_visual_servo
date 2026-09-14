@@ -1,0 +1,7 @@
+road_seg_train: /home/jqr/mzc/shenduxuexi/biye_date/seg_zong/images/train   # road segmentation data
+road_seg_val: /home/jqr/mzc/shenduxuexi/biye_date/seg_zong/images/val
+# number of classes
+nc: 2
+segnc: 2
+# class names
+segnames: ['100','board']

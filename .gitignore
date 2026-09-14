@@ -1,0 +1,32 @@
+# ================= catkin / ROS 构建产物（可由 catkin build 重新生成）=================
+/build/
+/devel/
+/.catkin_tools/
+/logs/
+*.catkin_tools
+
+# ================= 第三方依赖包（非本项目代码，获取方式见 README「依赖准备」）=================
+/src/aruco_ros/
+/src/easy_handeye/
+/src/realsense2_camera/
+
+# ================= Python =================
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# ================= 编辑器 / 系统临时文件 =================
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ================= 压缩包 / 大体积下载物 =================
+*.zip
+*.tar.gz
+
+# ================= 训练权重 =================
+# 保留推理用的 best.pt；last.pt 是等体积（43MB）的重复检查点，不入库（文件仍在本地）
+src/dianyunceshi/scripts/zuizhong/weights/last.pt
