@@ -111,11 +111,6 @@ bool linear_move_callback(jaka_msgs::Move::Request &request,
 bool joint_move_callback(jaka_msgs::Move::Request &request,
                         jaka_msgs::Move::Response &response)
 {
-    if (!validate_servo_pose_request(request, response, "Servo_j"))
-    {
-        return false;
-    }
-
     JointValue joint_pose;
     joint_pose.jVal[0] = request.pose[0];
     joint_pose.jVal[1] = request.pose[1];
@@ -300,6 +295,11 @@ bool servo_p_callback(jaka_msgs::ServoMove::Request &request,
 bool servo_j_callback(jaka_msgs::ServoMove::Request &request,
                      jaka_msgs::ServoMove::Response &response)
 {
+    if (!validate_servo_pose_request(request, response, "Servo_j"))
+    {
+        return false;
+    }
+
     JointValue joint_pose;
     joint_pose.jVal[0] = request.pose[0];
     joint_pose.jVal[1] = request.pose[1];
