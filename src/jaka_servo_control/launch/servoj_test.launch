@@ -1,0 +1,28 @@
+<launch>
+  <arg name="control_rate" default="125.0"/>
+  <arg name="command_timeout" default="0.10"/>
+  <arg name="max_joint_step" default="0.001"/>
+  <arg name="joint_index" default="5"/>
+  <arg name="amplitude" default="0.05"/>
+  <arg name="frequency" default="0.15"/>
+
+  <node pkg="jaka_servo_control"
+        type="servoj_bridge.py"
+        name="jaka_servo_control"
+        output="screen">
+    <param name="control_rate" value="$(arg control_rate)"/>
+    <param name="command_timeout" value="$(arg command_timeout)"/>
+    <param name="max_joint_step" value="$(arg max_joint_step)"/>
+  </node>
+
+  <node pkg="jaka_servo_control"
+        type="servoj_sine_test.py"
+        name="servoj_sine_test"
+        output="screen">
+    <param name="control_rate" value="$(arg control_rate)"/>
+    <param name="joint_index" value="$(arg joint_index)"/>
+    <param name="amplitude" value="$(arg amplitude)"/>
+    <param name="frequency" value="$(arg frequency)"/>
+    <param name="max_joint_step" value="$(arg max_joint_step)"/>
+  </node>
+</launch>
