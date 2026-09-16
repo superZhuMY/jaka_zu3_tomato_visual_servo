@@ -37,6 +37,7 @@
 #include <map>
 #include <chrono>
 #include <thread>
+#include <cmath>
 using namespace std;
 
 const double PI = 3.1415926;
@@ -217,6 +218,30 @@ bool jog_callback(jaka_msgs::Move::Request &request,
     return true;
 }
 
+bool validate_servo_pose_request(const jaka_msgs::ServoMove::Request &request,
+                                jaka_msgs::ServoMove::Response &response,
+                                const char *command_name)
+{
+    if (request.pose.size() != 6)
+    {
+        response.ret = 0;
+        response.message = string(command_name) + " requires exactly 6 pose values";
+        return false;
+    }
+
+    for (size_t i = 0; i < request.pose.size(); ++i)
+    {
+        if (!std::isfinite(request.pose[i]))
+        {
+            response.ret = 0;
+            response.message = string(command_name) + " contains a non-finite pose value";
+            return false;
+        }
+    }
+
+    return true;
+}
+
 bool servo_move_enable_callback(jaka_msgs::ServoMoveEnable::Request &request,
                                jaka_msgs::ServoMoveEnable::Response &response)
 {
@@ -239,6 +264,11 @@ bool servo_move_enable_callback(jaka_msgs::ServoMoveEnable::Request &request,
 bool servo_p_callback(jaka_msgs::ServoMove::Request &request,
                      jaka_msgs::ServoMove::Response &response)
 {
+    if (!validate_servo_pose_request(request, response, "Servo_p"))
+    {
+        return false;
+    }
+
     //speed * 0.008
     CartesianPose cartesian_pose;
     cartesian_pose.tran.x = request.pose[0];
@@ -265,6 +295,11 @@ bool servo_p_callback(jaka_msgs::ServoMove::Request &request,
 bool servo_j_callback(jaka_msgs::ServoMove::Request &request,
                      jaka_msgs::ServoMove::Response &response)
 {
+    if (!validate_servo_pose_request(request, response, "Servo_j"))
+    {
+        return false;
+    }
+
     JointValue joint_pose;
     joint_pose.jVal[0] = request.pose[0];
     joint_pose.jVal[1] = request.pose[1];
@@ -834,6 +869,11 @@ void* get_conn_scoket_state(void* args){
     }    
 }
 
+void disable_servo_mode_on_shutdown()
+{
+    robot.servo_move_enable(FALSE);
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -845,6 +885,7 @@ int main(int argc, char *argv[])
     string default_ip = "10.5.5.100";
     string robot_ip = nh.param("ip", default_ip);
     robot.login_in(robot_ip.c_str());
+    ros::on_shutdown(disable_servo_mode_on_shutdown);
     robot.set_status_data_update_time_interval(100);
     robot.set_block_wait_timeout(120);
     RobotStatus robotstatus;

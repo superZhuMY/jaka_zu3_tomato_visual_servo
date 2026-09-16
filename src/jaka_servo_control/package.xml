@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>jaka_servo_control</name>
+  <version>0.1.0</version>
+  <description>Safe ROS1 ServoJ command bridge and bench test for JAKA robots.</description>
+
+  <maintainer email="maintainer@example.com">JAKA tomato project</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <build_depend>jaka_msgs</build_depend>
+
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>std_srvs</build_export_depend>
+  <build_export_depend>jaka_msgs</build_export_depend>
+
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+  <exec_depend>jaka_msgs</exec_depend>
+</package>
